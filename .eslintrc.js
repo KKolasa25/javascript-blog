@@ -10,12 +10,30 @@ module.exports = {
         "SharedArrayBuffer": "readonly"
     },
     "parserOptions": {
-        "ecmaVersion": 2018
+        "ecmaVersion": 2015
     },
 
     "rules": {
-        "semi": ["error", "always"],
-        "quotes": ["error", "single"]
+        "indent": [
+            "error",
+            2
+        ],
+        "linebreak-style": [
+            "off"
+        ],
+        "quotes": [
+            "error",
+            "single",
+            {"allowTemplateLiterals": true}
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "no-console": [
+            "off"
+        ]
     }
 
 };
+
