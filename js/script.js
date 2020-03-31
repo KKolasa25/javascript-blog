@@ -43,7 +43,8 @@ function titleClickHandler(event) {
 
 const optArticleSelector = '.post',
   optTitleSelector = '.post-title',
-  optTitleListSelector = '.titles';
+  optTitleListSelector = '.titles',
+  optArticleTagsSelector = '.post-tags .list';
 
 function generateTitleLinks(customSelector = '') {
   console.log('Iterating works!');
@@ -96,7 +97,7 @@ generateTitleLinks();
 
 // FUNCTION generateTags // 
 
-const optArticleTagsSelector = '.post-tags .list';
+//const optArticleTagsSelector = '.post-tags .list';
 
 function generateTags() {
   /* [DONE] find all articles */
@@ -106,7 +107,7 @@ function generateTags() {
 
     /* [DONE] find tags wrapper */
     const tagsList = article.querySelector(optArticleTagsSelector);
-    console.log(optArticleTagsSelector);
+    console.log(tagsList);
 
     /* [DONE] make html variable with empty string */
     let html = '';
@@ -128,7 +129,6 @@ function generateTags() {
       console.log(linkHTML);
 
       /* [DONE] add generated code to html variable */
-
       html = html + linkHTML;
 
       /* END LOOP: for each tag */
@@ -148,40 +148,40 @@ function tagClickHandler(event){
   /* [DONE] prevent default action for this event */
   event.preventDefault();
 
-  /* [IN PROGRESS] make new constant named "clickedElement" and give it the value of "this" */
+  /* [DONE] make new constant named "clickedElement" and give it the value of "this" */
   const clickedElement = this;
   console.log('Tag was clicked!');
 
   /* [IN PROGRESS] make a new constant "href" and read the attribute "href" of the clicked element */
   const href = clickedElement.getAttribute('href');
-  console.log(href);
+  console.log('Szukany href: ' + href);
 
   /* [IN PROGRESS] make a new constant "tag" and extract tag from the "href" constant */
-  const tag = href.replace('#tag-', '');
-  console.log(tag);
+  //const tag = href.replace('#tag-', '');
+  //console.log(tag);
 
   /* [IN PROGRESS] find all tag links with class active */
-  const activeClassTags = href.querySelectorAll('a[href="' + href + '"]');
+  //const activeClassTags = document.querySelectorAll('a[href="' + href + '"]');
 
   /* START LOOP: for each active tag link */
-  const activeTags = activeClassTags;
-  for(let activeTag of activeTags ) {
-    /* [IN PROGRESS] remove class active */
-    activeTag.classList.remove('active');
+  //const activeTags = activeClassTags;
+  //for(let activeTag of activeTags ) {
+  /* [IN PROGRESS] remove class active */
+  //activeTag.classList.remove('active');
 
-  /* END LOOP: for each active tag link */}
-  /* [IN PROGRESS] find all tag links with "href" attribute equal to the "href" constant */
-  const targetTags = document.querySelector(href);
-  console.log(targetTags);
+  /* END LOOP: for each active tag link *////}/////
+  /* [IN PROGRESS] find all tag links with "href" attribute equal to the "href" constant */ // const targetTags = document.querySelector(href);
+  //console.log(targetTags);
 
   /* START LOOP: for each found tag link */
-  for(let targetTag of targetTags) {
+  //for(let targetTag of targetTags) {
 
-    /* [IN PROGRESS] add class active */
-    targetTag.classList.add('active');
-  /* END LOOP: for each found tag link */}
+  /* [IN PROGRESS] add class active */
+  //targetTag.classList.add('active');
+  /* END LOOP: for each found tag link */////}////
   /* [IN PROGRESS] execute function "generateTitleLinks" with article selector as argument */
-  generateTitleLinks('[data-tags~="' + tag + '"]');
+  //generateTitleLinks('[data-tags~="' + tag + '"]');
+  //console.log('Check: ' + generateTitleLinks);
 }
 
 function addClickListenersToTags(){
@@ -190,10 +190,8 @@ function addClickListenersToTags(){
   console.log(tags);
   /* START LOOP: for each link */
   for (let tag of tags) { 
-  /* [IN PROGRESS] add tagClickHandler as event listener for that link */ 
-tag.addEventListener('click', tagClickHandler);
+  /* [IN PROGRESS] add tagClickHandler as event listener for that link */ tag.addEventListener('click', tagClickHandler);
 
-  /* END LOOP: for each link */
-} 
+  /* END LOOP: for each link */} 
 }
 addClickListenersToTags();
