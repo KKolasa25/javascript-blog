@@ -249,7 +249,7 @@ function generateAuthors() {
 
     // Otrzymaj autora z atrybutu data-author
     /* [DONE] get author from data-author attribute */
-    const hrefAuthor = authorWrapper.getAttribute('data-author');
+    const hrefAuthor = articleAuthor.getAttribute('data-author');
     console.log(hrefAuthor);
 
     // Wygeneruj link HTML
@@ -326,7 +326,7 @@ function authorClickHandler(event) {
   // Wykonaj funckje generateTitleLinks z ODPOWIEDNIM ARGUMENTEM JAKO SELEKTOREM
   /* [IN PROGRESS] execute function "generateTitleLinks" with article selector as argument */
   
-  //generateTitleLinks('[data-author="' + nameAuthor + '"]'); 
+  generateTitleLinks('[data-author="' + nameAuthor + '"]'); 
   // Nie działa jak pownnno. Przy kliknięciu w autora nie dodaje go do listy "ALL POSTS" tak jak przy klinieciu w tag.
 }
 
