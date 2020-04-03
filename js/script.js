@@ -46,7 +46,7 @@ const optArticleSelector = '.post',
   optTitleListSelector = '.titles',
   optArticleTagsSelector = '.post-tags .list',
   optArticleAuthorSelector = '.post-author',
-  //optTagsListSelector  =  '.tags.list',
+  optTagsListSelector  =  '.tags.list',
   optCloudClassCount  = 5,
   optCloudClassPrefix = 'tag-size-';
 
@@ -168,7 +168,7 @@ function generateTags() {
       // Wygeneruj linki HTML
       /* [DONE] generate HTML of the link */
       const linkHTML = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>';
-      console.log(linkHTML);
+      console.log('Link do tagu:' + linkHTML);
 
       // Dodaj wygenerowane linki do zmiennej HTML
       /* [DONE] add generated code to html variable */
@@ -193,7 +193,7 @@ function generateTags() {
     /* END LOOP: for every article: */}
 
   /* [NEW] find list of tags in right column */
-  const tagList = document.querySelector('.tags');
+  const tagList = document.querySelector(optTagsListSelector);
 
   /* [NEW] create variable for all links HTML code */
   const tagsParams = calculateTagsParams(allTags);
@@ -203,8 +203,8 @@ function generateTags() {
   /* [NEW] START LOOP: for each tag in AllTags: */
   for(let tag in allTags){
     /* [NEW] generate code of a link and add it to allTagsHTML */
-    const taglinkHTML = '<li><a class="'+ calculateTagClass(allTags[tag], tagsParams)+'" href="#' + tag + '">' + tag + '</a> </li>';
-    console.log('Szukam tego: ' + tag);
+    const taglinkHTML = '<li><a class="'+ calculateTagClass(allTags[tag], tagsParams) + '" href="#tag-' + tag + '">' + tag + '</a> </li>';
+    console.log('Szukam tego: ' + taglinkHTML);
     allTagsHTML += taglinkHTML;
     
     //allTagsHTML += tag + ' (' + allTags[tag] + ') ';
@@ -278,13 +278,14 @@ function tagClickHandler(event) {
 function addClickListenersToTags() {
   // Znajdź wszystkie linku do tagów
   /* [DONE] find all links to tags */
-  const tags = document.querySelectorAll('.post-tags .list a');
+  const tags = document.querySelectorAll('a[href^="#tag-"]');
   console.log(tags);
   // START pętla: dla każdego linku 
   /* START LOOP: for each link */
   for (let tag of tags) {
     // Dodaj tagClickHandler jako nasłuchiwacz eventu dla tego linku
-  /* [DONE] add tagClickHandler as event listener for that link */ tag.addEventListener('click', tagClickHandler);
+  /* [DONE] add tagClickHandler as event listener for that link */ 
+    tag.addEventListener('click', tagClickHandler);
     /* END LOOP: for each link */
   }
 }
@@ -390,7 +391,6 @@ function authorClickHandler(event) {
   /* [IN PROGRESS] execute function "generateTitleLinks" with article selector as argument */
   
   generateTitleLinks('[data-author="' + nameAuthor + '"]'); 
-  // Nie działa jak pownnno. Przy kliknięciu w autora nie dodaje go do listy "ALL POSTS" tak jak przy klinieciu w tag.
 }
 
 function addClickListenersToAuthors() {
