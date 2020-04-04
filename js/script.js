@@ -46,8 +46,8 @@ const optArticleSelector = '.post',
   optTitleListSelector = '.titles',
   optArticleTagsSelector = '.post-tags .list',
   optArticleAuthorSelector = '.post-author',
-  optTagsListSelector  =  '.tags.list',
-  optCloudClassCount  = 5,
+  optTagsListSelector = '.tags.list',
+  optCloudClassCount = 5,
   optCloudClassPrefix = 'tag-size-',
   optAuthorsListSelector = '.authors.list';
 
@@ -106,26 +106,25 @@ generateTitleLinks();
 
 // FUNCTION calculateTagsParams //
 function calculateTagsParams(tags) {
-  const params = {max: 0, min: 999999};
+  const params = { max: 0, min: 999999 };
 
-  for(let tag in tags){
+  for (let tag in tags) {
     console.log(tag + ' is used ' + tags[tag] + ' times');
-    if(tags[tag] > params.max){
+    if (tags[tag] > params.max) {
       params.max = tags[tag];
     }
-    if(tags[tag] < params.min){
+    if (tags[tag] < params.min) {
       params.min = tags[tag];
     }
   }
-  
   return params;
 }
 
-function calculateTagClass(count, params){
+function calculateTagClass(count, params) {
   const normalizedCount = count - params.min;
   const normalizedMax = params.max - params.min;
   const percentage = normalizedCount / normalizedMax;
-  const classNumber = Math.floor( percentage * (optCloudClassCount - 1) + 1 );
+  const classNumber = Math.floor(percentage * (optCloudClassCount - 1) + 1);
   return optCloudClassPrefix + classNumber;
 }
 
@@ -177,7 +176,7 @@ function generateTags() {
 
       /* [NEW] check if this link is NOT already in allTags */
       // eslint-disable-next-line no-prototype-builtins
-      if(!allTags.hasOwnProperty(tag)){
+      if (!allTags.hasOwnProperty(tag)) {
         /* [NEW] add generated code to allTags object */
         allTags[tag] = 1;
       } else {
@@ -191,7 +190,8 @@ function generateTags() {
     tagsList.innerHTML = html;
 
     // END pętla: dla każdego artykułu
-    /* END LOOP: for every article: */}
+    /* END LOOP: for every article: */
+  }
 
   /* [NEW] find list of tags in right column */
   const tagList = document.querySelector(optTagsListSelector);
@@ -199,15 +199,15 @@ function generateTags() {
   /* [NEW] create variable for all links HTML code */
   const tagsParams = calculateTagsParams(allTags);
   console.log('tagsParams:', tagsParams);
-  let allTagsHTML = ''; 
+  let allTagsHTML = '';
 
   /* [NEW] START LOOP: for each tag in AllTags: */
-  for(let tag in allTags){
+  for (let tag in allTags) {
     /* [NEW] generate code of a link and add it to allTagsHTML */
-    const taglinkHTML = '<li><a class="'+ calculateTagClass(allTags[tag], tagsParams) + '" href="#tag-' + tag + '">' + tag + '</a> </li>';
+    const taglinkHTML = '<li><a class="' + calculateTagClass(allTags[tag], tagsParams) + '" href="#tag-' + tag + '">' + tag + '</a> </li>';
     console.log('Szukam tego: ' + taglinkHTML);
     allTagsHTML += taglinkHTML;
-    
+
     //allTagsHTML += ' (' + allTags[tag] + ') ';
     console.log(allTagsHTML);
   }
@@ -215,7 +215,7 @@ function generateTags() {
 
   /* [NEW] add html from allTags to tagList */
   tagList.innerHTML = allTagsHTML;
-  
+
 }
 generateTags();
 
@@ -255,7 +255,8 @@ function tagClickHandler(event) {
     activeTag.classList.remove('active');
 
     // END pętla: dla każdego aktywnego linku tagu
-    /* END LOOP: for each active tag link */}
+    /* END LOOP: for each active tag link */
+  }
   // Znajż wszystkie linku tagu z atrybutem "href" którego wartość jest równa const "href"
   /* [DONE] find all tag links with "href" attribute equal to the "href" constant */
   const targetTags = document.querySelectorAll('a[href="' + hrefTag + '"]');
@@ -269,8 +270,9 @@ function tagClickHandler(event) {
     /* [DONE] add class active */
     targetTag.classList.add('active');
     // END pętla: dla każdego linku tagu 
-    /* END LOOP: for each found tag link */}
-    
+    /* END LOOP: for each found tag link */
+  }
+
   // Wykonaj funkcje z selectorem artykułu jako argument
   /* [DONE] execute function "generateTitleLinks" with article selector as argument */
   generateTitleLinks('[data-tags~="' + tag + '"]');
@@ -285,7 +287,7 @@ function addClickListenersToTags() {
   /* START LOOP: for each link */
   for (let tag of tags) {
     // Dodaj tagClickHandler jako nasłuchiwacz eventu dla tego linku
-  /* [DONE] add tagClickHandler as event listener for that link */ 
+    /* [DONE] add tagClickHandler as event listener for that link */
     tag.addEventListener('click', tagClickHandler);
     /* END LOOP: for each link */
   }
@@ -302,7 +304,7 @@ function generateAuthors() {
   console.log(articleAuthors);
   // START pętla: dla każdego autora
   /* START LOOP: for every author: */
-  for(let articleAuthor of articleAuthors) {
+  for (let articleAuthor of articleAuthors) {
 
     // Znajdź wrapper autora
     /* [DONE] find author wrapper */
@@ -320,7 +322,7 @@ function generateAuthors() {
 
     // Wygeneruj link HTML
     /* [DONE] generate HTML of the link */
-    const linkHTML = '<li><a href="#author-' + hrefAuthor + '">' + hrefAuthor  + '</a></li>';
+    const linkHTML = '<li><a href="#author-' + hrefAuthor + '">' + hrefAuthor + '</a></li>';
     //tag + ' (' + allTags[tag] + ') ';
     console.log(linkHTML);
 
@@ -330,7 +332,7 @@ function generateAuthors() {
 
     /* [NEW] check if this link is NOT already in allTags */
     // eslint-disable-next-line no-prototype-builtins
-    if(!allAuthors.hasOwnProperty(hrefAuthor)){
+    if (!allAuthors.hasOwnProperty(hrefAuthor)) {
       /* [NEW] add generated code to allTags array */
       allAuthors[hrefAuthor] = 1;
     } else {
@@ -349,12 +351,12 @@ function generateAuthors() {
   let allAuthorsHTML = '';
 
   /* [NEW] START LOOP: for each tag in allAuthors */
-  for(let hrefAuthor in allAuthors){
+  for (let hrefAuthor in allAuthors) {
     /* [NEW] generate code of link and add it to allAuthorsHTML */
     //allAuthorsHTML += hrefAuthor + ' (' + allAuthors[hrefAuthor] + ') ';
-    const authorlinkHTML = '<li><a href="#author-' + hrefAuthor + '">' + hrefAuthor + '</a>' +  ' (' +  allAuthors[hrefAuthor] + ') '  +  '</li>';
+    const authorlinkHTML = '<li><a href="#author-' + hrefAuthor + '">' + hrefAuthor + '</a>' + ' (' + allAuthors[hrefAuthor] + ') ' + '</li>';
     allAuthorsHTML += authorlinkHTML;
-    
+
   }
   /* [NEW] END LOOP: for each tag in allAuthors: */
 
@@ -384,12 +386,12 @@ function authorClickHandler(event) {
   // Dodaj klase "active" do klikniętego linku
   /* [DONE] add class 'active' to the clicked link */
   clickedElement.classList.add('active');
-  
+
   // Stwórz nowy const i wydobądź z niej tag z const "href"
   /* [DONE] make a new constant "tag" and extract tag from the "href" constant */
   const nameAuthor = hrefAuthor.replace('#author-', '');
   console.log(nameAuthor);
-  
+
   // Znajdź wszyetkie linki tagu z klasą aktywną
   /* [DONE] find all tag links with class active */
   const activeAuthors = document.querySelectorAll('a.active[href^="#author-"]');
@@ -414,14 +416,15 @@ function authorClickHandler(event) {
     for (let targetAuthor of targetAuthors) {
 
       /* [DONE] add class active */
-      targetAuthor.classList.add('active');}
+      targetAuthor.classList.add('active');
+    }
   }
   /* END LOOP: for each found author link *
 
   // Wykonaj funckje generateTitleLinks z ODPOWIEDNIM ARGUMENTEM JAKO SELEKTOREM
   /* [IN PROGRESS] execute function "generateTitleLinks" with article selector as argument */
-  
-  generateTitleLinks('[data-author="' + nameAuthor + '"]'); 
+
+  generateTitleLinks('[data-author="' + nameAuthor + '"]');
 }
 
 function addClickListenersToAuthors() {
@@ -436,6 +439,7 @@ function addClickListenersToAuthors() {
     /* [DONE] add authorClickHandler as event listener for that link */
     author.addEventListener('click', authorClickHandler);
 
-  /* END LOOP: for each link */}
+    /* END LOOP: for each link */
+  }
 }
 addClickListenersToAuthors();
