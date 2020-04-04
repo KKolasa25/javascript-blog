@@ -208,7 +208,7 @@ function generateTags() {
     console.log('Szukam tego: ' + taglinkHTML);
     allTagsHTML += taglinkHTML;
     
-    //allTagsHTML += tag + ' (' + allTags[tag] + ') ';
+    //allTagsHTML += ' (' + allTags[tag] + ') ';
     console.log(allTagsHTML);
   }
   /* [NEW] END LOOP: for each tag in allTags */
@@ -292,8 +292,6 @@ function addClickListenersToTags() {
 }
 addClickListenersToTags();
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 function generateAuthors() {
   /* [NEW] create a new variable allAuthors with an empty object */
   let allAuthors = {};
@@ -322,7 +320,8 @@ function generateAuthors() {
 
     // Wygeneruj link HTML
     /* [DONE] generate HTML of the link */
-    const linkHTML = '<li><a href="#author-' + hrefAuthor + '">' + hrefAuthor + '</a></li>';
+    const linkHTML = '<li><a href="#author-' + hrefAuthor + '">' + hrefAuthor  + '</a></li>';
+    //tag + ' (' + allTags[tag] + ') ';
     console.log(linkHTML);
 
     // Dodaj wygenerowany kod do zmiennej HTML
@@ -353,7 +352,7 @@ function generateAuthors() {
   for(let hrefAuthor in allAuthors){
     /* [NEW] generate code of link and add it to allAuthorsHTML */
     //allAuthorsHTML += hrefAuthor + ' (' + allAuthors[hrefAuthor] + ') ';
-    const authorlinkHTML = '<li><a href="#author-' + hrefAuthor + '">' + hrefAuthor + '</a></li>';
+    const authorlinkHTML = '<li><a href="#author-' + hrefAuthor + '">' + hrefAuthor + '</a>' +  ' (' +  allAuthors[hrefAuthor] + ') '  +  '</li>';
     allAuthorsHTML += authorlinkHTML;
     
   }
