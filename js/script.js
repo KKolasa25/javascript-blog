@@ -4,7 +4,7 @@ const templates = {
   articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML),
   tagLink: Handlebars.compile(document.querySelector('#template-tag-link').innerHTML),
   authorLink: Handlebars.compile(document.querySelector('#template-author-link').innerHTML),
-  //tagCloudLink: Handlebars.compile(document.querySelector('#template-tag-cloud-link').innerHTML)
+  tagCloudLink: Handlebars.compile(document.querySelector('#template-tag-cloud-link').innerHTML)
 };
 
 'use strict';
@@ -183,7 +183,7 @@ function generateTags() {
       /* [DONE] generate HTML of the link */
 
       /* [NEW] */
-      const linkHTMLData = {id:'tag-' + tag, title: tag }; //Nie moge zrozumieć dlaczego musiałem dodać 'tag-'. Wiem, że jest to związane z filtrowaniem.
+      const linkHTMLData = {id:tag, title: tag }; //Nie moge zrozumieć dlaczego musiałem dodać 'tag-'. Wiem, że jest to związane z filtrowaniem.
       const linkHTML = templates.tagLink(linkHTMLData);
 
       //const linkHTML = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>';
@@ -218,22 +218,25 @@ function generateTags() {
   /* [NEW] create variable for all links HTML code */
   const tagsParams = calculateTagsParams(allTags);
   console.log('tagsParams:', tagsParams);
-  let allTagsHTML = '';
+  const allTagsData = {tags: []};
 
   /* [NEW] START LOOP: for each tag in AllTags: */
   for (let tag in allTags) {
     /* [NEW] generate code of a link and add it to allTagsHTML */
-    const taglinkHTML = '<li><a class="' + calculateTagClass(allTags[tag], tagsParams) + '" href="#tag-' + tag + '">' + tag + '</a> </li>';
+    const taglinkHTML = '<li><a class="' + calculateTagClass(allTags[tag], tagsParams) + '" href="#tag-' + tag + '">' + tag + '</a></li>';
     console.log('Szukam tego: ' + taglinkHTML);
-    allTagsHTML += taglinkHTML;
+    allTagsData.tags.push({
+      tag: tag,
+      count: allTags[tag],
+      className: calculateTagClass(allTags[tag], tagsParams)
+    });
 
-    //allTagsHTML += ' (' + allTags[tag] + ') ';
-    console.log(allTagsHTML);
   }
   /* [NEW] END LOOP: for each tag in allTags */
 
   /* [NEW] add html from allTags to tagList */
-  tagList.innerHTML = allTagsHTML;
+  tagList.innerHTML = templates.tagCloudLink(allTagsData);
+  console.log(allTagsData);
 
 }
 generateTags();
@@ -346,7 +349,7 @@ function generateAuthors() {
     //console.log(linkHTML);
 
     /* [NEW] */
-    const linkHTMLData = {id:'author-' + hrefAuthor, title: hrefAuthor }; //Nie moge zrozumieć dlaczego musiałem dodać 'author-'. Wiem, że jest to związane z filtrowaniem.
+    const linkHTMLData = {id:hrefAuthor, title: hrefAuthor }; //Nie moge zrozumieć dlaczego musiałem dodać 'author-'. Wiem, że jest to związane z filtrowaniem.
     const linkHTML = templates.authorLink(linkHTMLData);
 
 
