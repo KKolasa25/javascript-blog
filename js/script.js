@@ -1,3 +1,12 @@
+/* [NEW] */
+const templates = {
+
+  articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML),
+  tagLink: Handlebars.compile(document.querySelector('#template-tag-link').innerHTML),
+  authorLink: Handlebars.compile(document.querySelector('#template-author-link').innerHTML),
+  //tagCloudLink: Handlebars.compile(document.querySelector('#template-tag-cloud-link').innerHTML)
+};
+
 'use strict';
 
 function titleClickHandler(event) {
@@ -84,8 +93,12 @@ function generateTitleLinks(customSelector = '') {
 
     // Stwórz link HTML
     /* [DONE] create HTML of the link */
-    const linkHTML = '<li><a href="#' + articleId + '"><span>' + articleTitle + '</span></a></li>';
-    console.log('Link HTML: ' + linkHTML);
+    //const linkHTML = '<li><a href="#' + articleId + '"><span>' + articleTitle + '</span></a></li>';
+    //console.log('Link HTML: ' + linkHTML);
+
+    /* [NEW] */
+    const linkHTMLData = {id: articleId, title: articleTitle};
+    const linkHTML = templates.articleLink(linkHTMLData);
 
     // Zamieść link do zmiennej HTML
     /* [DONE] insert link into html variable */
@@ -117,6 +130,7 @@ function calculateTagsParams(tags) {
       params.min = tags[tag];
     }
   }
+
   return params;
 }
 
@@ -167,8 +181,13 @@ function generateTags() {
 
       // Wygeneruj linki HTML
       /* [DONE] generate HTML of the link */
-      const linkHTML = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>';
-      console.log('Link do tagu:' + linkHTML);
+
+      /* [NEW] */
+      const linkHTMLData = {id:'tag-' + tag, title: tag }; //Nie moge zrozumieć dlaczego musiałem dodać 'tag-'. Wiem, że jest to związane z filtrowaniem.
+      const linkHTML = templates.tagLink(linkHTMLData);
+
+      //const linkHTML = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>';
+      //console.log('Link do tagu:' + linkHTML);
 
       // Dodaj wygenerowane linki do zmiennej HTML
       /* [DONE] add generated code to html variable */
@@ -322,9 +341,14 @@ function generateAuthors() {
 
     // Wygeneruj link HTML
     /* [DONE] generate HTML of the link */
-    const linkHTML = '<li><a href="#author-' + hrefAuthor + '">' + hrefAuthor + '</a></li>';
+    //const linkHTML = '<li><a href="#author-' + hrefAuthor + '">' + hrefAuthor + '</a></li>';
     //tag + ' (' + allTags[tag] + ') ';
-    console.log(linkHTML);
+    //console.log(linkHTML);
+
+    /* [NEW] */
+    const linkHTMLData = {id:'author-' + hrefAuthor, title: hrefAuthor }; //Nie moge zrozumieć dlaczego musiałem dodać 'author-'. Wiem, że jest to związane z filtrowaniem.
+    const linkHTML = templates.authorLink(linkHTMLData);
+
 
     // Dodaj wygenerowany kod do zmiennej HTML
     /* [DONE] add generated code to html variable */
