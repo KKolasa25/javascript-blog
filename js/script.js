@@ -1,13 +1,14 @@
+'use strict';
+
 /* [NEW] */
 const templates = {
 
   articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML),
   tagLink: Handlebars.compile(document.querySelector('#template-tag-link').innerHTML),
   authorLink: Handlebars.compile(document.querySelector('#template-author-link').innerHTML),
-  tagCloudLink: Handlebars.compile(document.querySelector('#template-tag-cloud-link').innerHTML)
+  tagCloudLink: Handlebars.compile(document.querySelector('#template-tag-cloud-link').innerHTML),
+  authorsColumnLink: Handlebars.compile(document.querySelector('#template-authors-link').innerHTML)
 };
-
-'use strict';
 
 function titleClickHandler(event) {
   event.preventDefault();
@@ -49,7 +50,6 @@ function titleClickHandler(event) {
 }
 
 // FUNCTION generateTitleLinks // 
-
 const optArticleSelector = '.post',
   optTitleSelector = '.post-title',
   optTitleListSelector = '.titles',
@@ -130,7 +130,6 @@ function calculateTagsParams(tags) {
       params.min = tags[tag];
     }
   }
-
   return params;
 }
 
@@ -183,7 +182,7 @@ function generateTags() {
       /* [DONE] generate HTML of the link */
 
       /* [NEW] */
-      const linkHTMLData = {id:tag, title: tag }; //Nie moge zrozumieć dlaczego musiałem dodać 'tag-'. Wiem, że jest to związane z filtrowaniem.
+      const linkHTMLData = {id:tag, title: tag };
       const linkHTML = templates.tagLink(linkHTMLData);
 
       //const linkHTML = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>';
@@ -223,8 +222,6 @@ function generateTags() {
   /* [NEW] START LOOP: for each tag in AllTags: */
   for (let tag in allTags) {
     /* [NEW] generate code of a link and add it to allTagsHTML */
-    const taglinkHTML = '<li><a class="' + calculateTagClass(allTags[tag], tagsParams) + '" href="#tag-' + tag + '">' + tag + '</a></li>';
-    console.log('Szukam tego: ' + taglinkHTML);
     allTagsData.tags.push({
       tag: tag,
       count: allTags[tag],
@@ -232,8 +229,6 @@ function generateTags() {
     });
 
   }
-  /* [NEW] END LOOP: for each tag in allTags */
-
   /* [NEW] add html from allTags to tagList */
   tagList.innerHTML = templates.tagCloudLink(allTagsData);
   console.log(allTagsData);
@@ -344,14 +339,10 @@ function generateAuthors() {
 
     // Wygeneruj link HTML
     /* [DONE] generate HTML of the link */
-    //const linkHTML = '<li><a href="#author-' + hrefAuthor + '">' + hrefAuthor + '</a></li>';
-    //tag + ' (' + allTags[tag] + ') ';
-    //console.log(linkHTML);
 
     /* [NEW] */
-    const linkHTMLData = {id:hrefAuthor, title: hrefAuthor }; //Nie moge zrozumieć dlaczego musiałem dodać 'author-'. Wiem, że jest to związane z filtrowaniem.
+    const linkHTMLData = {id:hrefAuthor, title: hrefAuthor };
     const linkHTML = templates.authorLink(linkHTMLData);
-
 
     // Dodaj wygenerowany kod do zmiennej HTML
     /* [DONE] add generated code to html variable */
@@ -375,20 +366,23 @@ function generateAuthors() {
   const authorList = document.querySelector(optAuthorsListSelector);
 
   /* [NEW] create variable for all links HTML code */
-  let allAuthorsHTML = '';
+  //let allAuthorsHTML = '';
+  const allAuthorsHTML = {authors: []};
 
   /* [NEW] START LOOP: for each tag in allAuthors */
   for (let hrefAuthor in allAuthors) {
     /* [NEW] generate code of link and add it to allAuthorsHTML */
     //allAuthorsHTML += hrefAuthor + ' (' + allAuthors[hrefAuthor] + ') ';
-    const authorlinkHTML = '<li><a href="#author-' + hrefAuthor + '">' + hrefAuthor + '</a>' + ' (' + allAuthors[hrefAuthor] + ') ' + '</li>';
-    allAuthorsHTML += authorlinkHTML;
-
+    //const authorlinkHTML = '<li><a href="#author-' + hrefAuthor + '">' + hrefAuthor + '</a>' + ' (' + allAuthors[hrefAuthor] + ') ' + '</li>';
+    //allAuthorsHTML += authorlinkHTML;
+    allAuthorsHTML.authors.push({
+      hrefAuthor: hrefAuthor,
+      count: allAuthors[hrefAuthor]
+    });
   }
   /* [NEW] END LOOP: for each tag in allAuthors: */
-
   /* [NEW] add html from allAuthorsHTML to authorList */
-  authorList.innerHTML = allAuthorsHTML;
+  authorList.innerHTML = templates.authorsColumnLink(allAuthorsHTML);
 
 }
 generateAuthors();
